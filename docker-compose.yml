@@ -1,0 +1,37 @@
+services:
+  oracle-db:
+    image: container-registry.oracle.com/database/free:latest
+    container_name: oracle-db
+    hostname: oracle-db
+    ports:
+      - "1521:1521"
+      - "5500:5500"
+    environment:
+      - ORACLE_PWD=${ORACLE_PWD}
+      - ORACLE_PDB=FREEPDB1
+      - ORACLE_CHARACTERSET=AL32UTF8
+      - APEX_PWD=${APEX_PWD}
+    volumes:
+      - ./oracle-data/db:/opt/oracle/oradata
+      - ./apex:/opt/oracle/apex
+    restart: unless-stopped
+
+  oracle-ords:
+    image: container-registry.oracle.com/database/ords:latest
+    container_name: oracle-ords
+    depends_on:
+      - oracle-db
+    ports:
+      - "8181:8080"
+    environment:
+      - DBHOST=oracle-db
+      - DBPORT=1521
+      - DBSERVICENAME=FREEPDB1
+      - ORACLE_PWD=${ORACLE_PWD}
+      - ORDS_PWD=${ORDS_PWD}
+      - APEX_PWD=${APEX_PWD}
+    volumes:
+      - ./oracle-data/ords-config:/etc/ords/config
+      - ./oracle-data/ords-secrets:/opt/oracle/variables
+      - ./apex:/opt/oracle/apex
+    restart: unless-stopped

@@ -1,0 +1,14 @@
+# Données de la base (volumineuses, propres à chaque machine, jamais à versionner)
+oracle-data/
+# Fichiers APEX téléchargés (gros fichier zip, retéléchargeable, inutile de versionner)
+apex/
+apex.zip
+# Fichiers de dump Data Pump (contiennent potentiellement des données sensibles)
+*.dmp
+*.log
+# Secrets (mots de passe) — voir Partie 5
+.env
+# Fichiers système parasites
+.DS_Store
+Thumbs.db
+META-INF/
