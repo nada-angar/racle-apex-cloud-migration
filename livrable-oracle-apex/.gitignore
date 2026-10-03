@@ -1,0 +1,13 @@
+# Secrets — jamais versionnés
+.env
+
+# Données de la base (volumineuses, propres à chaque environnement)
+oracle-data/
+
+# Fichiers d'export / logs potentiellement sensibles
+*.dmp
+*.log
+
+# Fichiers système parasites
+.DS_Store
+Thumbs.db

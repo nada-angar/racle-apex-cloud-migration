@@ -1,0 +1,36 @@
+services:
+
+  oracle-apex:
+    build:
+      context: ./oracle-apex
+    container_name: oracle-apex
+    ports:
+      - "1521:1521"   # SQL*Net (sqlplus, Data Pump)
+      - "5500:5500"   # Enterprise Manager Express
+      - "8181:8080"   # ORDS / APEX — interface web HTTP
+      - "8443:8443"   # ORDS — HTTPS
+    environment:
+      - ORACLE_PWD=${ORACLE_PWD}
+      - ORACLE_CHARACTERSET=AL32UTF8
+      - APEX_ADMIN_PWD=${APEX_ADMIN_PWD}
+      - APEX_PUBLIC_USER_PWD=${APEX_PUBLIC_USER_PWD}
+    volumes:
+      - oracle-data:/opt/oracle/oradata
+    restart: unless-stopped
+
+  pont-sqlserver:
+    build:
+      context: ./pont-sqlserver
+    container_name: pont-sqlserver
+    ports:
+      - "5000:5000"
+    environment:
+      - SQLSERVER_HOST=${SQLSERVER_HOST}
+      - SQLSERVER_PORT=${SQLSERVER_PORT:-1433}
+      - SQLSERVER_DB=${SQLSERVER_DB}
+      - SQLSERVER_USER=${SQLSERVER_USER}
+      - SQLSERVER_PWD=${SQLSERVER_PWD}
+    restart: unless-stopped
+
+volumes:
+  oracle-data:

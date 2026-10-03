@@ -1,0 +1,5 @@
+# Force les fins de ligne Unix (LF) sur les scripts shell, quelle que soit
+# la plateforme qui clone/édite ce dépôt (Windows convertirait sinon en CRLF,
+# ce qui casse l'interprétation des heredocs bash dans 01_start_ords.sh —
+# voir docs/ARCHITECTURE.md, incident déjà rencontré et documenté).
+*.sh text eol=lf
